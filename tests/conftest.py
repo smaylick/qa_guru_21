@@ -1,8 +1,10 @@
 import pytest
 from appium.options.android import UiAutomator2Options
 from appium.options.ios import XCUITestOptions
+from appium import webdriver
 from selene import browser
-import os
+
+from utils import attach
 
 
 @pytest.fixture
@@ -20,10 +22,10 @@ def mobile_management_android():
             "accessKey": "V8XbR7NPHDoqWp9LiejD"
         }
     })
-    browser.config.driver_remote_url = "http://hub.browserstack.com/wd/hub"
-    browser.config.driver_options = options
-    browser.config.timeout = float(os.getenv('timeout', '10.0'))
+    browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub", options=options)
     yield
+    attach.add_screenshot(browser)
+    attach.add_video(browser)
     browser.quit()
 
 
@@ -42,8 +44,6 @@ def mobile_management_ios():
             "sessionName": "BStack first_test"
         }
     })
-    browser.config.driver_remote_url = "http://hub.browserstack.com/wd/hub"
-    browser.config.driver_options = options
-    browser.config.timeout = float(os.getenv('timeout', '10.0'))
+    browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub", options=options)
     yield
     browser.quit()

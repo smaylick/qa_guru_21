@@ -1,6 +1,6 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from selene import browser, have
-from tests.conftest import mobile_management_android
+
 
 def test_search_android(mobile_management_android):
     browser.element((AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia")).click()
