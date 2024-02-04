@@ -45,5 +45,7 @@ def mobile_management_ios():
         }
     })
     browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub", options=options)
+    attach.add_screenshot(browser)
+    attach.add_video(browser)
     yield
     browser.quit()
