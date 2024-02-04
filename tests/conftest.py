@@ -3,7 +3,7 @@ from appium.options.android import UiAutomator2Options
 from appium.options.ios import XCUITestOptions
 from appium import webdriver
 from selene import browser
-
+from settings import config
 from utils import attach
 
 
@@ -18,11 +18,11 @@ def mobile_management_android():
             "projectName": "First Python project",
             "buildName": "browserstack-build-1",
             "sessionName": "BStack first_test",
-            "userName": "bsuser_z1ABvm",
-            "accessKey": "V8XbR7NPHDoqWp9LiejD"
+            "userName": config.user_name,
+            "accessKey": config.access_key
         }
     })
-    browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub", options=options)
+    browser.config.driver = webdriver.Remote(config.remote_url, options=options)
     yield
     attach.add_screenshot(browser)
     attach.add_video(browser)
@@ -37,14 +37,14 @@ def mobile_management_ios():
         "platformName": "ios",
         "platformVersion": "13",
         "bstack:options": {
-            "userName": "bsuser_z1ABvm",
-            "accessKey": "V8XbR7NPHDoqWp9LiejD",
+            "userName": config.user_name,
+            "accessKey": config.access_key,
             "projectName": "First Python project",
             "buildName": "browserstack-build-1",
             "sessionName": "BStack first_test"
         }
     })
-    browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub", options=options)
+    browser.config.driver = webdriver.Remote(config.remote_url, options=options)
     attach.add_screenshot(browser)
     attach.add_video(browser)
     yield
