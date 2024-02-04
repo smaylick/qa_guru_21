@@ -45,7 +45,7 @@ def mobile_management_ios():
         }
     })
     browser.config.driver = webdriver.Remote(config.remote_url, options=options)
+    yield
     attach.add_screenshot(browser)
     attach.add_video(browser)
-    yield
     browser.quit()
