@@ -1,3 +1,4 @@
+import allure
 import pytest
 from appium.options.android import UiAutomator2Options
 from appium.options.ios import XCUITestOptions
@@ -24,9 +25,13 @@ def mobile_management_android():
     })
     browser.config.driver = webdriver.Remote(config.remote_url, options=options)
     yield
-    attach.add_screenshot(browser)
-    attach.add_video(browser)
-    browser.quit()
+    attach.attach_screenshot()
+    session_id = browser.driver.session_id
+
+    with allure.step('Tear down app session'):
+        browser.quit()
+
+    attach.attach_bstack_video(session_id)
 
 
 @pytest.fixture
@@ -46,6 +51,10 @@ def mobile_management_ios():
     })
     browser.config.driver = webdriver.Remote(config.remote_url, options=options)
     yield
-    attach.add_screenshot(browser)
-    attach.add_video(browser)
-    browser.quit()
+    attach.attach_screenshot()
+    session_id = browser.driver.session_id
+
+    with allure.step('Tear down app session'):
+        browser.quit()
+
+    attach.attach_bstack_video(session_id)
